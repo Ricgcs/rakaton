@@ -19,7 +19,56 @@
     </div>
     
     <div id="corpo">
-
+<input type="text" placeholder="Nome" id="nome">
+<input type="password" placeholder="Senha" id="senha">
+<button id="logar">Logar</button>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=>{
+          if(!nome, !senha){
+                alert("preencha todos os campos");
+            }
+
+    else{
+            const button = document.getElementById("logar");
+            button.addEventListener("click",async ()=>{
+            const nome = document.getElementById("nome").value;
+            const senha = document.getElementById("senha").value;
+            const formData = {nome, senha}
+            try
+            {
+                
+            const response = await fetch("http://localhost:3000/diretor/logar",
+                {
+                method:"POST",
+                headers: {'Content-Type': 'application/json'},
+                body:JSON.stringify(formData),
+                })
+
+            const data = await response.json();
+            const retorno = data.result;
+            console.log(retorno);
+            
+            if(retorno == 1){
+                localStorage.setItem("nome",nome)
+                localStorage.setItem("senha",senha)
+                window.location = "/Front/Telas/Escola/logado.html"
+            }
+            else{
+                alert("Usuário não encontrado");
+            }
+            }
+
+            catch(error)
+            {
+            console.log(error);
+            }
+        })
+    }
+
+
+        }) 
+
+    </script>
 </body>
 </html>

@@ -20,7 +20,6 @@ USE `chamada` ;
 CREATE TABLE IF NOT EXISTS `chamada`.`Escola` (
   `Cod` INT NOT NULL AUTO_INCREMENT,
   `Nome` VARCHAR(225) NOT NULL,
-  `Nome` VARCHAR(225) NOT NULL,
   `Email` VARCHAR(225) NOT NULL,
   `Senha` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`Cod`))

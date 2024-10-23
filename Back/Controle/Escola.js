@@ -1,45 +1,50 @@
-import { conexao } from "../Conexao/conexao";
+const { conexao } = require("../Conexao/conexao");
 
-const con = await conexao();
+const setDiretor = async ({ nome, email, senha }) => {
+  const con = await conexao();
+  console.log(nome, email, senha);
+  const sql = "INSERT INTO escola (Nome, Email, Senha) VALUES (?,?,?)";
 
-export const setDiretor = async ({nome, email, senha}) =>
-{
-console.log(nome, email, senha, regiao);
-const sql = "INSERT INTO escola (Nome, Email, Senha) VALUES (?,?,?)"
+  try {
+    const response = await con.query(sql, [nome, email, senha]);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-try{
-const response = await con.query(sql,[nome,email,senha]);
-console.log|(response)
-return response;
-}
+const codEscola = async ({nome}) =>{
+    const con = await conexao();
+  console.log(nome);
+  const sql = "SELECT Cod from escola where Nome = ?";
 
-catch(error){
-console.log(error)
-}
-}
+  try {
+    const response = await con.query(sql, [nome]);
 
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+    
 
+};
 
-export const login = async ({nome, senha}) => {
- 
-    try {
-        const sql = "SELECT * FROM cliente";
-        const rows = await con.query(sql); 
-        
-        let a;
-let b = 0;
+const login = async ({ nome, senha }) => {
+  const con = await conexao();
 
+  try {
+    const sql = "SELECT * FROM escola";
+    const rows = await con.query(sql);
 
-       for(a = 0; a < rows[0].length ;a++){
-
-      if(rows[0][a].Nome == nome && rows[0][a].Senha == senha){
-       
-    return 1;
+    for (let a = 0; a < rows[0].length; a++) {
+      if (rows[0][a].Nome === nome && rows[0][a].Senha === senha) {
+        return 1;
       }
-       }
-
-    } catch (error) {
-        console.error("Erro no select_user", error);
-      
     }
-}
+  } catch (error) {
+    console.error("Erro no select_user", error);
+  }
+};
+
+module.exports = { setDiretor, login, codEscola };

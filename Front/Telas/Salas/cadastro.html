@@ -7,20 +7,22 @@
     <link rel="stylesheet" href="/Front/Estilo/inicial.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <title>Inicial</title>
+    <title>Cadastro de sala</title>
 </head>
 <body>
     <div id="header">
-<a href="/Front/Telas/Escola/Cadastro.html">Cadastro_diretor</a>
-<a href="/Front/Telas/Professor/loginProfessor.html">Login_professor</a>
-<a href="/Front/Telas/Aluno/loginAluno.html">Login_aluno</a>
-<a href="/Front/Telas/Escola/loginDiretor.html">Login diretor</a>
+
+        <a href="/Front/Telas/Professor/cadastro_professor.html">Cadastrar professor</a>
+<a href="/Front/Telas/Aluno/cadastro_aluno.html">Cadastrar aluno</a>
+<a href="/Front/Telas/Salas/cadastro.html">Cadastrar sala</a>
          
     </div>
     
     <div id="corpo">
             <div id="forms">
+               
                 <input type="text" placeholder="Nome" id="Nome">
+                <input type="text" placeholder="Materia" id="Materia">
                 <input type="email" placeholder="Email" id="Email">
                 <input type="password" placeholder="Senha" id="Senha">
                 <button id="cadastro">Cadastrar</button>
@@ -34,37 +36,53 @@
    
 
         button.addEventListener("click", async(event) => {
+                       
            
-            
             const nome = document.getElementById("Nome").value;
+            const materia = document.getElementById("Materia").value;
             const email = document.getElementById("Email").value;
             const senha = document.getElementById("Senha").value;
-
-            if(!nome, !email, !senha){
+           
+            if(!nome, !materia, !email, !senha){
                 alert("preencha todos os campos");
             }
 
             else{
-            const formData = {nome, email, senha}          
+                     
 
             
             try {
                 
-    const response = await fetch(`http://localhost:3000/diretor`, {
+                
+                
+                    const nome_escola = localStorage.getItem("nome");
+                
+    const response_cod = await fetch("http://localhost:3000/diretor/cod", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({nome:nome_escola}), // Enviar como JSON
+    });
+                
+            const data_cod = await response_cod.json();
+            const cod = data_cod.result;
+           
+    
+            const formData = {cod, nome, materia, email, senha} 
+    const response = await fetch(`http://localhost:3000/Professor`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body:  JSON.stringify(formData),
 });
 
-                if (response.ok) {
-                    alert("Diretor(a) cadastrado com sucesso");
-                } else {
-                    alert("Erro ao cadastrar Diretor(a)");
-                }
+                    alert("Professor(a) cadastrado com sucesso");
+               
+                    
+             
 
             } catch (error) {
-                console.log("Erro ao cadastrar diretor(a)");
+                console.log("Erro ao cadastrar Professor(a)");
                 console.error(error);
+                alert("Erro ao cadastrar Professor(a)");
             }
         }
         });
