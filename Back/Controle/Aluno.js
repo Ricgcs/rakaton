@@ -2,7 +2,7 @@ import { conexao } from "../Conexao/conexao";
 
 const con = await conexao();
 
-export const setDiretor = async ({nome, email, senha}) =>
+export const setAluno = async ({nome, email, senha}) =>
 {
 console.log(nome, email, senha, regiao);
 const sql = "INSERT INTO escola (Nome, Email, Senha) VALUES (?,?,?)"
@@ -19,8 +19,7 @@ console.log(error)
 }
 
 
-
-export const login = async ({nome, senha}) => {
+export const login = async (cod, nome, senha) => {
  
     try {
         const sql = "SELECT * FROM cliente";
@@ -32,7 +31,7 @@ let b = 0;
 
        for(a = 0; a < rows[0].length ;a++){
 
-      if(rows[0][a].Nome == nome && rows[0][a].Senha == senha){
+      if(rows[0][a].Empresa_Cod_empresa == cod && rows[0][a].Nome == nome && rows[0][a].Senha == senha){
        
     return 1;
       }
