@@ -2,13 +2,13 @@ import { conexao } from "../Conexao/conexao";
 
 const con = await conexao();
 
-export const cadastroEscola = async (nome, email, senha, regiao) =>
+export const cadastroDiretor = async ({nome, email, senha}) =>
 {
 console.log(nome, email, senha, regiao);
-const sql = "INSERT INTO escola (Nome, email, senha, Regiao) VALUES (?,?,?,?,?)"
+const sql = "INSERT INTO escola (Nome, Email, Senha) VALUES (?,?,?)"
 
 try{
-const response = await con.query(sql,[nome,email,senha,regiao]);
+const response = await con.query(sql,[nome,email,senha]);
 console.log|(response)
 return response;
 }
