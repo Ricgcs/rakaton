@@ -15,6 +15,7 @@
         <a href="/Front/Telas/Professor/cadastro_professor.html">Cadastrar professor</a>
 <a href="/Front/Telas/Aluno/cadastro_aluno.html">Cadastrar aluno</a>
 <a href="/Front/Telas/Salas/cadastro.html">Cadastrar sala</a>
+<button id="logOut">Log out</button>
          
     </div>
     
@@ -57,17 +58,18 @@
                 
                     const nome_escola = localStorage.getItem("nome");
                 
-    const response_cod = await fetch("http://localhost:3000/diretor/cod", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({nome:nome_escola}), // Enviar como JSON
-    });
+                    const response_cod = await fetch("http://localhost:3000/diretor/cod", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nome: nome_escola }),
+});
                 
             const data_cod = await response_cod.json();
             const cod = data_cod.result;
            
     
             const formData = {cod, nome, materia, email, senha} 
+            console.log(formData)
     const response = await fetch(`http://localhost:3000/Professor`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -85,6 +87,11 @@
                 alert("Erro ao cadastrar Professor(a)");
             }
         }
+        });
+
+        logOut.addEventListener("click",()=>{
+            localStorage.clear()
+            window.location.href = "/Front/Telas/Inicial.html";
         });
     </script>
    

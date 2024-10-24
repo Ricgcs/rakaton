@@ -30,6 +30,22 @@ const codEscola = async ({nome}) =>{
 
 };
 
+const nomeCod = async ({cod}) =>{
+  const con = await conexao();
+console.log(nome);
+const sql = "SELECT Nome from escola where Escola_Cod = ?";
+
+try {
+  const response = await con.query(sql, [cod]);
+
+  return response;
+} catch (error) {
+  console.log(error);
+}
+  
+
+};
+
 const login = async ({ nome, senha }) => {
   const con = await conexao();
 
@@ -47,4 +63,4 @@ const login = async ({ nome, senha }) => {
   }
 };
 
-module.exports = { setDiretor, login, codEscola };
+module.exports = { setDiretor, login, codEscola, nomeCod };

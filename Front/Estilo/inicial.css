@@ -48,3 +48,26 @@ body{
     width: 70%;
     height: 70%;
 }
+
+#header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+#header a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #000;
+}
+#forms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px; /* Define a largura dos inputs */
+    margin: 0 auto; /* Centraliza o formulário */
+}
+#forms input, #forms button {
+    margin: 10px 0; /* Espaçamento entre os inputs e o botão */
+    padding: 10px;
+    width: 100%; /* Faz os inputs ocuparem toda a largura do formulário */
+}

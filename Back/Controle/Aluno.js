@@ -1,20 +1,38 @@
 const { conexao } = require("../Conexao/conexao");
 
-const setAluno = async ({ nome, email, senha }) => {
+const setAluno = async ({ Escola_Cod, nome, ano, sala, senha }) => {
   const con = await conexao();
-  console.log(nome, email, senha);
-  const sql = "INSERT INTO escola (Nome, Email, Senha) VALUES (?,?,?)";
+  console.log(nome,  senha);
+  const sql = "INSERT INTO aluno (Escola_Cod, Nome, Ano, sala, senha) VALUES (? , ? , ? , ?, ?)";
 
   try {
-    const response = await con.query(sql, [nome, email, senha]);
+    const response = await con.query(sql, [Escola_Cod, nome, ano, sala, senha]);
     console.log(response);
     return response;
-  } catch (error) {
+  } 
+  catch (error)
+   {
     console.log(error);
   }
 };
 
-const login = async (cod, nome, senha) => {
+
+
+const alunosSala = async ({cod, sala}) => {
+  const con = await conexao();
+console.log({cod, sala})
+  try {
+    const sql = "SELECT Nome FROM aluno where Escola_Cod = ? && sala = ?";
+    const rows = await con.query(sql,[cod, sala]);
+   
+    return rows[0];
+    
+  } catch (error) {
+    console.error("Erro no select_user", error);
+  }
+};
+
+const loginAluno = async (cod, nome, senha) => {
   const con = await conexao();
 
   try {
@@ -31,5 +49,20 @@ const login = async (cod, nome, senha) => {
   }
 };
 
-module.exports = { setAluno, login };
-a
+
+const codAluno = async ({nome, cod}) =>{
+  const con = await conexao();
+console.log(nome);
+const sql = "SELECT Cod from aluno where Escola_Cod = ? && Nome = ?";
+
+try {
+  const response = await con.query(sql, [cod, nome]);
+
+  return response;
+} catch (error) {
+  console.log(error);
+}
+  
+
+};
+module.exports = { setAluno, alunosSala, codAluno};

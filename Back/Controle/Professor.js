@@ -2,7 +2,7 @@ const { conexao } = require("../Conexao/conexao");
 
 const setProfessor = async ({ Escola_Cod, nome, materia, email, senha,  }) => {
   const con = await conexao();
-  console.log(nome, email, senha);
+  console.log({ Escola_Cod, nome, materia, email, senha,  });
   const sql = "INSERT INTO professor (Escola_Cod, Nome, Materia, email, senha) VALUES (? , ? , ? , ?,  ?)";
 
   try {
@@ -14,15 +14,32 @@ const setProfessor = async ({ Escola_Cod, nome, materia, email, senha,  }) => {
   }
 };
 
-const login = async (cod, nome, senha) => {
+const codProf = async ({nome, cod}) =>{
+  const con = await conexao();
+console.log(nome);
+const sql = "SELECT Cod from professor where Escola_Cod = ? && Nome = ?";
+
+try {
+  const response = await con.query(sql, [cod, nome]);
+  console.log(response[0][0].Cod);
+  return response[0][0].Cod;
+} catch (error) {
+  console.log(error);
+}
+  
+
+};
+
+const loginProfessor = async ({cod, nome, senha}) => {
   const con = await conexao();
 
   try {
-    const sql = "SELECT * FROM cliente";
-    const rows = await con.query(sql);
-
+    const sql = "SELECT * FROM professor where Escola_Cod = ? && Nome = ? && senha = ?";
+    const rows = await con.query(sql,[cod, nome, senha]);
+    console.log(rows);
+    console.log(cod, nome, senha)
     for (let a = 0; a < rows[0].length; a++) {
-      if (rows[0][a].Empresa_Cod_empresa === cod && rows[0][a].Nome === nome && rows[0][a].Senha === senha) {
+      if (rows[0][a].Escola_Cod === cod && rows[0][a].Nome === nome && rows[0][a].senha === senha) {
         return 1;
       }
     }
@@ -31,4 +48,4 @@ const login = async (cod, nome, senha) => {
   }
 };
 
-module.exports = { setProfessor, login };
+module.exports = { setProfessor, loginProfessor, codProf };

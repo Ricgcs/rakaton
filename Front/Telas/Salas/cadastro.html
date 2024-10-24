@@ -15,6 +15,8 @@
         <a href="/Front/Telas/Professor/cadastro_professor.html">Cadastrar professor</a>
 <a href="/Front/Telas/Aluno/cadastro_aluno.html">Cadastrar aluno</a>
 <a href="/Front/Telas/Salas/cadastro.html">Cadastrar sala</a>
+<button id="logOut">Log out</button>
+
          
     </div>
     
@@ -22,9 +24,7 @@
             <div id="forms">
                
                 <input type="text" placeholder="Nome" id="Nome">
-                <input type="text" placeholder="Materia" id="Materia">
-                <input type="email" placeholder="Email" id="Email">
-                <input type="password" placeholder="Senha" id="Senha">
+                <input type="number" placeholder="Capacidade" id="Capacidade">
                 <button id="cadastro">Cadastrar</button>
             </div>
     </div>
@@ -39,52 +39,51 @@
                        
            
             const nome = document.getElementById("Nome").value;
-            const materia = document.getElementById("Materia").value;
-            const email = document.getElementById("Email").value;
-            const senha = document.getElementById("Senha").value;
-           
-            if(!nome, !materia, !email, !senha){
+            const capacidade = document.getElementById("Capacidade").value;
+          
+            if(!nome,  !capacidade){
                 alert("preencha todos os campos");
             }
 
             else{
-                     
-
-            
-            try {
-                
-                
+                                 
+            try {   
                 
                     const nome_escola = localStorage.getItem("nome");
                 
     const response_cod = await fetch("http://localhost:3000/diretor/cod", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({nome:nome_escola}), // Enviar como JSON
+        body: JSON.stringify({nome:nome_escola}), 
     });
                 
             const data_cod = await response_cod.json();
             const cod = data_cod.result;
            
     
-            const formData = {cod, nome, materia, email, senha} 
-    const response = await fetch(`http://localhost:3000/Professor`, {
+            const formData = {cod, nome, capacidade} 
+    const response = await fetch(`http://localhost:3000/salas`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body:  JSON.stringify(formData),
 });
 
-                    alert("Professor(a) cadastrado com sucesso");
+                    alert("Sala cadastrado com sucesso");
                
                     
              
 
             } catch (error) {
-                console.log("Erro ao cadastrar Professor(a)");
+                console.log("Erro ao cadastrar Sala");
                 console.error(error);
-                alert("Erro ao cadastrar Professor(a)");
+                alert("Erro ao cadastrar Sala");
             }
         }
+        });
+
+        logOut.addEventListener("click",()=>{
+            localStorage.clear()
+            window.location.href = "/Front/Telas/Inicial.html";
         });
     </script>
    

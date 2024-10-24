@@ -4,7 +4,7 @@ const { setDiretor, login, codEscola, nomeCod } = require("./Controle/Escola");
 const { setProfessor, loginProfessor, codProf } = require("./Controle/Professor");
 const { setSala, mostrarSalas, codSala } = require('../Back/Controle/Sala');
 const { setAluno, alunosSala, codAluno } = require("../Back/Controle/Aluno");
-const { setChamada, mostrar} = require("../Back/Controle/chamada");
+const { setChamada} = require("../Back/Controle/chamada");
 const cors = require('cors');
 
 const app = express();
@@ -232,17 +232,15 @@ app.post('/aluno/codAluno', async (req, res) => {
 
 app.post('/chamada', async (req, res) => {
     //Data, Presente,Nome_aluno,Sala,professor
-    
     const Data = req.body.Data;
     const Presente = req.body.Presente;
-    const Nome_aluno = req.body.Nome_aluno;
+    const Nome_aluno = req.body.nome_aluno;
     const Sala = req.body.Sala;
     const professor = req.body.professor;
-    const cod_escola = Number(req.body.cod_escola);
-    console.log("servidor",{ Data, Presente,Nome_aluno,Sala,professor,cod_escola})
+   
     
 
-    const valores = { Data, Presente,Nome_aluno,Sala,professor, cod_escola};
+    const valores = { Data, Presente,Nome_aluno,Sala,professor};
     try {
         const response = await setChamada(valores);
         res.status(200).json({ result: response }); // Correção aqui
@@ -251,24 +249,6 @@ app.post('/chamada', async (req, res) => {
         res.status(500).send('Erro no servidor');
     }
 });
-
-
-app.post('/chamada/mostrar', async (req, res) => {
-    const cod = Number(req.body.cod);
-    const sala = req.body.sala;
-    console.log({cod, sala})
-    try {
-        const retorno = await mostrar({ cod, sala });
-        const data = await retorno;
-        console.log("Data:",data)
-        res.status(200).json({ result: data}); 
-        // Correção aqui
-    } catch (error) {
-        console.error('Erro ao buscar chamadas:', error);
-        res.status(500).send('Erro no servidor');
-    }
-});
-
 
 //--------------------------------------------------Servidor-----------------------------------------------\\
 app.listen(porta, host, () => {

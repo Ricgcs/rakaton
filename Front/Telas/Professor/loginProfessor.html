@@ -20,6 +20,75 @@
     
     <div id="corpo">
 
+<input type="text" placeholder="nome_escola" id="nome_escola">
+<input type="text" placeholder="Nome" id="nome">
+<input type="password" placeholder="Senha" id="senha">
+
+<button id="logar">Logar</button>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=>{
+          if(!nome, !senha){
+                alert("preencha todos os campos");
+            }
+
+    else{
+            const button = document.getElementById("logar");
+
+            button.addEventListener("click",async ()=>{
+
+            const nome_da_escolar = document.getElementById("nome_escola").value;
+            const nome = document.getElementById("nome").value;
+            const senha = document.getElementById("senha").value;
+
+
+            const nome_escola = nome_da_escolar;
+                
+                const response_cod = await fetch("http://localhost:3000/diretor/cod", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({nome:nome_escola}), 
+                });
+                            
+                        const data_cod = await response_cod.json();
+                        const cod = data_cod.result;
+
+            const formData = {cod, nome, senha}
+            try
+            {
+                
+            const response = await fetch("http://localhost:3000/professor/logar",
+                {
+                method:"POST",
+                headers: {'Content-Type': 'application/json'},
+                body:JSON.stringify(formData),
+                })
+
+            const data = await response.json();
+            const retorno = data.result;
+            console.log(retorno);
+            
+            if(retorno == 1){
+                localStorage.setItem("cod",cod);
+                localStorage.setItem("nome",nome);
+                localStorage.setItem("senha",senha);
+                window.location = "/Front/Telas/Professor/logado.html"
+            }
+            else{
+                alert("Usuário não encontrado");
+            }
+            }
+
+            catch(error)
+            {
+            console.log(error);
+            }
+        })
+    }
+
+
+        }) 
+
+    </script>
 </body>
 </html>

@@ -11,20 +11,21 @@
 </head>
 <body>
     <div id="header">
-
-        <a href="/Front/Telas/Professor/cadastro_professor.html">Cadastrar professor</a>
+        
+<a href="/Front/Telas/Professor/cadastro_professor.html">Cadastrar professor</a>
 <a href="/Front/Telas/Aluno/cadastro_aluno.html">Cadastrar aluno</a>
 <a href="/Front/Telas/Salas/cadastro.html">Cadastrar sala</a>
-         
+<button id="logOut">Log out</button>
+
     </div>
     
     <div id="corpo">
             <div id="forms">
                
                 <input type="text" placeholder="Nome" id="Nome">
-                <input type="text" placeholder="Materia" id="Materia">
-                <input type="email" placeholder="Email" id="Email">
-                <input type="password" placeholder="Senha" id="Senha">
+                <input type="text" placeholder="Ano" id="Ano">
+                <input type="text" placeholder="sala" id="Sala">
+                <input type="senha" placeholder="Senha" id="Senha">
                 <button id="cadastro">Cadastrar</button>
             </div>
     </div>
@@ -39,11 +40,11 @@
                        
            
             const nome = document.getElementById("Nome").value;
-            const materia = document.getElementById("Materia").value;
-            const email = document.getElementById("Email").value;
+            const ano = document.getElementById("Ano").value;
+            const sala = document.getElementById("Sala").value;
             const senha = document.getElementById("Senha").value;
            
-            if(!nome, !materia, !email, !senha){
+            if(!nome, !ano, !sala, !senha){
                 alert("preencha todos os campos");
             }
 
@@ -52,39 +53,43 @@
 
             
             try {
-                
-                
-                
                     const nome_escola = localStorage.getItem("nome");
                 
     const response_cod = await fetch("http://localhost:3000/diretor/cod", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({nome:nome_escola}), // Enviar como JSON
+        body: JSON.stringify({nome:nome_escola}), 
     });
                 
             const data_cod = await response_cod.json();
             const cod = data_cod.result;
            
     
-            const formData = {cod, nome, materia, email, senha} 
-    const response = await fetch(`http://localhost:3000/Professor`, {
+            const formData = {cod, nome, ano, sala, senha} 
+    const response = await fetch(`http://localhost:3000/aluno`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body:  JSON.stringify(formData),
 });
 
-                    alert("Professor(a) cadastrado com sucesso");
+                    alert("Aluno(a) cadastrado com sucesso");
                
                     
              
 
             } catch (error) {
-                console.log("Erro ao cadastrar Professor(a)");
+                console.log("Erro ao cadastrar Aluno(a)");
                 console.error(error);
-                alert("Erro ao cadastrar Professor(a)");
+                alert("Erro ao cadastrar Aluno(a)");
             }
         }
+        });
+
+        const logOut = document.getElementById("logOut");
+
+        logOut.addEventListener("click",()=>{
+            localStorage.clear()
+            window.location.href = "/Front/Telas/Inicial.html";
         });
     </script>
    
