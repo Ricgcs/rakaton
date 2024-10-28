@@ -19,7 +19,7 @@ const setChamada = async ({ Data, Presente,Nome_aluno,Sala,professor,cod_escola 
 const mostrar = async ({cod, sala}) =>{
   const con = await conexao();
   console.log({cod, sala})
-const sql = "SELECT Nome_aluno, Presente FROM chamada WHERE cod_escola = ? AND Sala = ?;";
+const sql = "SELECT Nome_aluno, Presente, Data FROM chamada WHERE cod_escola = ? AND Sala = ?;";
 
 try {
   const response = await con.query(sql, [cod, sala]);

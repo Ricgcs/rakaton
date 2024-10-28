@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `chamada`.`escola` (
   `Senha` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`Cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `chamada`.`aluno` (
     FOREIGN KEY (`Escola_Cod`)
     REFERENCES `chamada`.`escola` (`Cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -61,8 +61,10 @@ CREATE TABLE IF NOT EXISTS `chamada`.`chamada` (
   `Nome_aluno` VARCHAR(255) NOT NULL,
   `Sala` VARCHAR(225) NOT NULL,
   `chamadacol` VARCHAR(45) NOT NULL,
+  `cod_escola` INT NULL DEFAULT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -82,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `chamada`.`professor` (
     FOREIGN KEY (`Escola_Cod`)
     REFERENCES `chamada`.`escola` (`Cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -100,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `chamada`.`salas` (
     FOREIGN KEY (`Escola_Cod`)
     REFERENCES `chamada`.`escola` (`Cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 

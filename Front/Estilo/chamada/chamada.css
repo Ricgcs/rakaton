@@ -9,7 +9,7 @@ body{
     height: 100%;
     width: 100%;
     background-color: rgb(214, 191, 176);
-
+ 
 }
 
 #header{
@@ -66,13 +66,10 @@ body{
     justify-content: center;
     width: 300px; /* Define a largura dos inputs */
     margin: 0 auto; /* Centraliza o formulário */
+    
 }
 #forms input, #forms button {
     margin: 10px 0; /* Espaçamento entre os inputs e o botão */
     padding: 10px;
     width: 100%; /* Faz os inputs ocuparem toda a largura do formulário */
-}
-
-section{
-    overflow: auto;
 }
